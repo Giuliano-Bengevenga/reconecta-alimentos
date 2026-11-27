@@ -15,11 +15,17 @@ function localToUtc(value) {
 
 function format(value) {
   if (!value) return '—';
-  return DateTime.fromISO(value, { zone: 'utc' }).setZone(ZONE).toFormat("dd/MM/yyyy 'às' HH:mm");
+  const parsed = value instanceof Date
+    ? DateTime.fromJSDate(value, { zone: 'utc' })
+    : DateTime.fromISO(value, { zone: 'utc' });
+  return parsed.setZone(ZONE).toFormat("dd/MM/yyyy 'às' HH:mm");
 }
 
 function isPast(value) {
-  return DateTime.fromISO(value, { zone: 'utc' }).toMillis() <= Date.now();
+  const parsed = value instanceof Date
+    ? DateTime.fromJSDate(value, { zone: 'utc' })
+    : DateTime.fromISO(value, { zone: 'utc' });
+  return parsed.toMillis() <= Date.now();
 }
 
 module.exports = { ZONE, nowIso, localToUtc, format, isPast };

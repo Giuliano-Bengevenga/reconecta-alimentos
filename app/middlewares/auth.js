@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-const db = require('../models/db');
+const store = require('../models/store');
 
 function csrf(req, res, next) {
   if (!req.session.csrfToken) req.session.csrfToken = crypto.randomBytes(32).toString('hex');
@@ -11,9 +11,9 @@ function csrf(req, res, next) {
   next();
 }
 
-function requireAuth(req, res, next) {
+async function requireAuth(req, res, next) {
   if (!req.session.userId) return res.redirect('/login');
-  const user = db.prepare('SELECT active,role FROM users WHERE id=?').get(req.session.userId);
+  const user = store.findUserById(req.session.userId);
   if (!user || !user.active) {
     return req.session.destroy(() => res.status(403).render('errors/403', { title: 'Conta desativada' }));
   }

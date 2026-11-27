@@ -4,7 +4,6 @@ const establishment = require('../controllers/institutionController');
 const organization = require('../controllers/organizationController');
 const admin = require('../controllers/adminController');
 const { requireAuth, requireRole } = require('../middlewares/auth');
-const db = require('../models/db');
 const router = express.Router();
 
 router.get('/', auth.showLanding);

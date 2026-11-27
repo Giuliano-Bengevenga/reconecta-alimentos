@@ -1,38 +1,34 @@
 # ReConecta Alimentos
 
-MVP acadêmico em MVC para conectar estabelecimentos alimentícios a organizações sociais na Região Metropolitana de Campinas.
+Protótipo acadêmico em MVC para demonstrar os fluxos de doação de alimentos entre estabelecimentos e organizações sociais.
 
-## Pré-requisitos
-- Node.js LTS
-- npm
-
-## Instalação e execução
+## Executar
 ```powershell
 npm install
 copy .env.example .env
-npm run db:init
-npm run db:seed
 npm start
 ```
 
-Acesse `http://localhost:3000`.
+Abra `http://localhost:3000`.
 
-## Administrador
-Crie o administrador somente por comando local:
-```powershell
-npm run create-admin -- "Nome do Administrador" "admin@exemplo.com" "senha-com-8-caracteres"
-```
+## Contas demonstrativas
+Todas usam a senha fictícia `demo1234`:
+- Estabelecimento: `padaria@demo.local`
+- Organização: `ong@demo.local`
+- Administrador: `admin@demo.local`
 
-## Dados fictícios
-`npm run db:seed` cria cinco padarias, três organizações e uma oferta fictícia. Senha dos participantes: `12345678`. O cadastro público não cria administradores.
+Os exemplos são carregados na memória quando a aplicação inicia. Também é possível criar contas e experimentar os fluxos.
 
-## Testes
-```powershell
-npm test
-```
+## Hospedar no Render Free
+Conecte este repositório como **Web Service**, com Build Command `npm install` e Start Command `npm start`. Configure `NODE_ENV=production`. Não é necessário configurar `SESSION_SECRET` para a demonstração; sem ela, o app gera uma chave aleatória ao iniciar.
 
-## Limitações
-- MVP local, sem pagamento, mapas ou notificações externas.
-- Os filtros não certificam compatibilidade sanitária ou logística.
-- A informação de validade é fornecida pelo doador.
-- O horário é interpretado em America/Sao_Paulo e persistido em UTC.
+Não é necessário criar um banco nem configurar `DATABASE_URL`.
+
+## Limitações do modo demonstração
+- Não há banco de dados: cadastros, ofertas, solicitações, histórico e sessões existem apenas na memória do processo.
+- Os dados reiniciam quando a aplicação reinicia, é redeployada ou o serviço gratuito do Render entra em suspensão.
+- Não use informações pessoais ou dados reais de participantes.
+- Contas demonstrativas e indicadores são fictícios; não representam resultados do piloto.
+- Sem pagamentos, mapas, notificações externas ou certificação sanitária.
+
+Os testes das regras de reserva e dos fluxos podem ser executados com `npm test`.

@@ -1,13 +1,12 @@
 require('dotenv').config();
+const crypto = require('crypto');
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
-const SQLiteStore = require('connect-sqlite3')(session);
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const routes = require('./app/routes');
 const { csrf } = require('./app/middlewares/auth');
-require('./app/models/db');
 
 const app = express();
 app.set('view engine','ejs');
@@ -16,13 +15,14 @@ app.use(helmet({ contentSecurityPolicy:false }));
 app.use(express.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,'public')));
 app.use(session({
-  store: new SQLiteStore({ db:'sessions.db', dir:path.join(__dirname,'data') }),
-  secret:process.env.SESSION_SECRET || 'development-secret-change-me',
+  store: new session.MemoryStore(),
+  secret:process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex'),
   resave:false,
   saveUninitialized:false,
   cookie:{ httpOnly:true, sameSite:'lax', secure:process.env.NODE_ENV==='production', maxAge:1000*60*60*8 }
 }));
 app.use((req,res,next) => {
+  res.locals.demoMode = true;
   res.locals.user=req.session.userId ? { id:req.session.userId, name:req.session.userName, role:req.session.role } : null;
   res.locals.flash=req.session.flash || null;
   delete req.session.flash;
