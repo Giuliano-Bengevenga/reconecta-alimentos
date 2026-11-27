@@ -9,6 +9,7 @@ const routes = require('./app/routes');
 const { csrf } = require('./app/middlewares/auth');
 
 const app = express();
+app.set('trust proxy', 1);
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'app/views'));
 app.use(helmet({ contentSecurityPolicy:false }));

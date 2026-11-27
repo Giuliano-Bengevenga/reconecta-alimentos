@@ -2,6 +2,7 @@ process.env.NODE_ENV = 'test';
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const { execFileSync } = require('node:child_process');
 const bcrypt = require('bcryptjs');
 const request = require('supertest');
 const store = require('../app/models/store');
@@ -143,4 +144,23 @@ test('acesso demonstrativo do estabelecimento abre o painel', async () => {
   const dashboard = await agent.get('/estabelecimento');
   assert.equal(dashboard.status,200);
   assert.match(dashboard.text,/Modo demonstração/);
+});
+
+test('cookie de sessão seguro funciona atrás do proxy HTTPS do Render', () => {
+  const script = `
+    const assert = require('node:assert/strict');
+    const app = require('./app');
+    require('supertest')(app).get('/login').set('x-forwarded-proto','https').then(response => {
+      assert.equal(response.status,200);
+      assert.ok(response.headers['set-cookie'][0].includes('; Secure;'));
+    }).catch(error => {
+      console.error(error);
+      process.exitCode = 1;
+    });
+  `;
+  execFileSync(process.execPath, ['-e', script], {
+    cwd: process.cwd(),
+    env: { ...process.env, NODE_ENV: 'production', SESSION_SECRET: 'test-secret-only' },
+    stdio: 'pipe'
+  });
 });
