@@ -1,0 +1,4 @@
+<%- include('../partials/head',{title:'Painel da organização'}) %>
+<main class="container page"><div class="page-heading"><div><span class="eyebrow">Organização social</span><h1><%=institution.name%></h1></div><a class="button" href="/organizacao/ofertas">Consultar ofertas</a></div>
+<h2>Ofertas disponíveis</h2><%if(!offers.length){%><div class="empty">Não há ofertas disponíveis no momento.</div><%}else{%><div class="card-list"><%offers.forEach(o=>{%><article class="card"><h3><%=o.name%></h3><p><%=o.quantity%> <%=o.unit%> · <%=o.category%></p><p><%=o.city%> · <%=o.neighborhood%></p><p><strong>Prazo:</strong> <%=format(o.deadline)%></p><a class="button secondary" href="/organizacao/ofertas/<%=o.id%>">Avaliar oferta</a></article><%})%></div><%}%></main>
+<%- include('../partials/footer') %>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %>ReConecta Alimentos</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <nav class="container nav">
+    <a class="brand" href="/">ReConecta <span>Alimentos</span></a>
+    <% if (user) { %>
+      <div class="nav-links">
+        <% if (user.role === 'establishment') { %><a href="/estabelecimento">Painel</a><a href="/estabelecimento/ofertas/nova">Nova oferta</a><a href="/estabelecimento/perfil">Perfil</a><% } %>
+        <% if (user.role === 'organization') { %><a href="/organizacao">Painel</a><a href="/organizacao/ofertas">Ofertas</a><a href="/organizacao/solicitacoes">Solicitações</a><a href="/organizacao/perfil">Perfil</a><% } %>
+        <% if (user.role === 'admin') { %><a href="/admin">Painel administrativo</a><% } %>
+        <form method="post" action="/logout" class="inline"><input type="hidden" name="csrfToken" value="<%= csrfToken %>"><button class="link-button">Sair</button></form>
+      </div>
+    <% } else { %>
+      <div class="nav-links"><a href="/cadastro">Criar conta</a><a class="button small-button" href="/login">Entrar</a></div>
+    <% } %>
+  </nav>
+</header>
+<% if (flash) { %><div class="container notice"><%= flash %></div><% } %>

@@ -1,0 +1,9 @@
+<%- include('../partials/head',{title:'Cadastro'}) %>
+<main class="container narrow"><section class="panel"><h1>Criar conta</h1><% if(error){%><p class="error"><%=error%></p><%}%>
+<form method="post" action="/cadastro"><input type="hidden" name="csrfToken" value="<%=csrfToken%>">
+<label>Perfil<select name="role" required><option value="">Selecione</option><option value="establishment">Estabelecimento</option><option value="organization">Organização social</option></select></label>
+<label>Seu nome<input name="name" required></label><label>E-mail<input type="email" name="email" required></label><label>Senha (mínimo 8 caracteres)<input type="password" name="password" minlength="8" required></label>
+<h2>Dados da instituição</h2><label>Nome da instituição<input name="institutionName" required></label><label>Cidade<input name="city" required></label><label>Bairro<input name="neighborhood" required></label><label>Endereço de retirada ou recebimento<input name="address" required></label><label>Telefone<input name="phone" required></label><label>Responsável<input name="responsible" required></label>
+<label>Tipos de alimentos aceitos<textarea name="acceptedTypes"></textarea></label><label>Capacidade aproximada<textarea name="capacity"></textarea></label><label>Disponibilidade de transporte<textarea name="transport"></textarea></label><label>Conservação disponível<textarea name="storage"></textarea></label><label>Horários de recebimento<textarea name="receivingHours"></textarea></label>
+<button class="button">Cadastrar</button></form></section></main>
+<%- include('../partials/footer') %>

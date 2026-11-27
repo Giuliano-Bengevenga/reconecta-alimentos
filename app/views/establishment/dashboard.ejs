@@ -1,0 +1,4 @@
+<%- include('../partials/head',{title:'Painel do estabelecimento'}) %>
+<main class="container page"><div class="page-heading"><div><span class="eyebrow">Estabelecimento</span><h1><%=institution.name%></h1></div><a class="button" href="/estabelecimento/ofertas/nova">Nova oferta</a></div>
+<% if(!offers.length){%><div class="empty"><h2>Nenhuma oferta publicada</h2><p>Publique sua primeira oferta de alimento excedente.</p></div><%} else {%><div class="table-wrap"><table><thead><tr><th>Alimento</th><th>Quantidade</th><th>Prazo</th><th>Status</th><th></th></tr></thead><tbody><% offers.forEach(o=>{%><tr><td><strong><%=o.name%></strong></td><td><%=o.quantity%> <%=o.unit%></td><td><%=format(o.deadline)%></td><td><span class="tag"><%=o.status%></span></td><td><a href="/estabelecimento/ofertas/<%=o.id%>">Ver detalhes</a></td></tr><%})%></tbody></table></div><%}%></main>
+<%- include('../partials/footer') %>
