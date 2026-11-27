@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#185c43">
+  <meta name="description"
+    content="ReConecta Alimentos: uma proposta para conectar excedentes de estabelecimentos a organizações sociais na Região Metropolitana de Campinas.">
+
+  <title>ReConecta Alimentos | Conecte alimentos a quem precisa</title>
+
+  <style>
+    :root {
+      --green: #185c43;
+      --green-dark: #103e30;
+      --lime: #d8edaa;
+      --cream: #faf9f3;
+      --text: #233d32;
+      --muted: #607268;
+      --border: #dde5dc;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--text);
+      font: 16px/1.6 system-ui, sans-serif;
+    }
+
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    :focus-visible {
+      outline: 3px solid #c27a28;
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(1120px, 90%);
+      margin-inline: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(250, 249, 243, .97);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      text-decoration: none;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -.8px;
+    }
+
+    .brand span { color: #628045; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 22px;
+      border: 1px solid var(--green);
+      border-radius: 9px;
+      background: var(--green);
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+
+    .button:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--green);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+      gap: 70px;
+      padding-block: 90px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-block: 18px 24px;
+      font-size: clamp(40px, 5.2vw, 66px);
+      line-height: 1.06;
+      letter-spacing: -3px;
+    }
+
+    h1 span { color: #5d7b43; }
+
+    .hero p {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-block: 30px 18px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .visual {
+      position: relative;
+      min-height: 420px;
+      padding: 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-radius: 28px;
+      background: var(--green);
+      overflow: hidden;
+    }
+
+    .visual::before {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      right: -110px;
+      top: -100px;
+      border: 55px solid rgba(216, 237, 170, .12);
+      border-radius: 50%;
+    }
+
+    .visual-label {
+      position: relative;
+      color: var(--lime);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .food-card {
+      position: relative;
+      margin-top: 20px;
+      padding: 25px;
+      border-radius: 16px;
+      background: var(--white);
+      box-shadow: 0 20px 40px #06291b33;
+    }
+
+    .food-card .icon { font-size: 42px; }
+
+    .food-card h3 {
+      margin: 12px 0 4px;
+      font-size: 22px;
+    }
+
+    .food-card p {
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      background: #edf4e6;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .connection {
+      position: relative;
+      margin-top: 18px;
+      padding: 14px 18px;
+      border: 1px solid #ffffff38;
+      border-radius: 12px;
+      color: white;
+      font-size: 14px;
+    }
+
+    .strip {
+      padding-block: 22px;
+      background: var(--lime);
+      color: var(--green-dark);
+      text-align: center;
+      font-weight: 650;
+    }
+
+    section { padding-block: 75px; }
+
+    h2 {
+      max-width: 660px;
+      margin-block: 12px 18px;
+      font-size: clamp(30px, 3.4vw, 42px);
+      line-height: 1.15;
+      letter-spacing: -1.3px;
+    }
+
+    .intro {
+      max-width: 650px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 35px;
+    }
+
+    .card {
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--white);
+    }
+
+    .card h3 {
+      margin-block: 18px 10px;
+      font-size: 20px;
+    }
+
+    .card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .number {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #edf4e6;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .audience { background: #edf1e9; }
+    .audience .grid { grid-template-columns: 1fr 1fr; }
+
+    ul {
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    li { margin-block: 8px; }
+
+    .pilot {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      gap: 65px;
+    }
+
+    form {
+      padding: 30px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 16px;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    input, select {
+      width: 100%;
+      margin-top: 7px;
+      padding: 12px;
+      border: 1px solid #bccbbf;
+      border-radius: 7px;
+      background: white;
+      color: var(--text);
+    }
+
+    form .button { width: 100%; }
+
+    #feedback {
+      margin: 16px 0 0;
+      color: var(--green);
+      font-size: 14px;
+    }
+
+    footer {
+      padding-block: 30px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    @media (max-width: 760px) {
+      .nav-links a:not(.button) { display: none; }
+      .nav-links .button { padding: 10px 13px; }
+      .brand { font-size: 18px; }
+
+      .hero, .pilot { grid-template-columns: 1fr; gap: 35px; }
+      .hero { padding-block: 50px; }
+      h1 { letter-spacing: -2px; }
+      .visual { min-height: 360px; padding: 25px; }
+
+      .grid, .audience .grid { grid-template-columns: 1fr; }
+      section { padding-block: 50px; }
+      form { padding: 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .button { transition: none; }
+      .button:hover { transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="container" aria-label="Navegação principal">
+      <a class="brand" href="#" aria-label="ReConecta Alimentos, início">
+        ReConecta<span> Alimentos</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#participantes">Para quem</a>
+        <a class="button" href="#piloto">Conhecer o piloto</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container hero">
+      <div>
+        <span class="eyebrow">Projeto na Região de Campinas</span>
+
+        <h1>Alimento bom merece <span>um novo destino.</span></h1>
+
+        <p>
+          Uma proposta para conectar estabelecimentos com excedentes
+          a organizações sociais que podem recebê-los.
+          Mais conexão, menos desperdício.
+        </p>
+
+        <div class="actions">
+          <a class="button" href="#piloto">Quero doar alimentos ↗</a>
+          <a class="button secondary" href="#participantes">
+            Sou uma organização
+          </a>
+        </div>
+
+        <div class="small">
+          Projeto acadêmico em fase de validação.
+        </div>
+      </div>
+
+      <div class="visual" aria-label="Exemplo ilustrativo de uma oferta">
+        <span class="visual-label">Uma conexão que faz sentido</span>
+
+        <div class="food-card">
+          <span class="icon" aria-hidden="true">🥖</span>
+          <h3>Excedentes de uma padaria</h3>
+          <p>
+            Tipo, quantidade e prazo de retirada reunidos
+            para facilitar a conexão.
+          </p>
+          <span class="tag">Exemplo ilustrativo</span>
+        </div>
+
+        <div class="connection">
+          ↳ Organização próxima com capacidade de receber
+        </div>
+      </div>
+    </div>
+
+    <div class="strip">
+      Conectar quem tem excedentes a quem pode aproveitá-los.
+    </div>
+
+    <section id="como-funciona" class="container">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Da oferta à retirada, com organização.</h2>
+
+      <p class="intro">
+        A proposta reúne as informações necessárias para encontrar
+        organizações compatíveis e acompanhar cada doação.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <span class="number">01</span>
+          <h3>Informe o excedente</h3>
+          <p>
+            Cadastre o alimento, a quantidade, as condições
+            de conservação e o prazo disponível para retirada.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="number">02</span>
+          <h3>Encontre uma conexão</h3>
+          <p>
+            A conexão considera localização, interesse,
+            transporte e capacidade de recebimento.
+          </p>
+        </article>
+
+        <article class="card">
+          <span class="number">03</span>
+          <h3>Acompanhe a destinação</h3>
+          <p>
+            Combine a retirada e registre a entrega para
+            manter um histórico das doações realizadas.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="participantes" class="audience">
+      <div class="container">
+        <span class="eyebrow">Quem participa</span>
+        <h2>Dois lados unidos pelo mesmo propósito.</h2>
+
+        <div class="grid">
+          <article class="card">
+            <span class="eyebrow">Estabelecimentos</span>
+            <h3>Seu excedente pode continuar tendo valor.</h3>
+
+            <p>
+              A proposta atende padarias, restaurantes, mercados
+              e outros negócios que geram excedentes.
+            </p>
+
+            <ul>
+              <li>Centralizar as informações das ofertas.</li>
+              <li>Facilitar o contato com organizações próximas.</li>
+              <li>Consultar o histórico das destinações.</li>
+            </ul>
+
+            <a class="button" href="#piloto">Simular uma oferta</a>
+          </article>
+
+          <article class="card">
+            <span class="eyebrow">Organizações sociais</span>
+            <h3>Receba de acordo com sua capacidade.</h3>
+
+            <p>
+              Organizações, bancos de alimentos e cozinhas solidárias
+              poderão avaliar ofertas compatíveis com sua estrutura.
+            </p>
+
+            <ul>
+              <li>Conhecer o alimento e a quantidade disponível.</li>
+              <li>Avaliar o prazo e as condições de retirada.</li>
+              <li>Organizar o recebimento com o estabelecimento.</li>
+            </ul>
+
+            <a class="button secondary" href="#piloto">
+              Conhecer a proposta
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="piloto" class="container pilot">
+      <div>
+        <span class="eyebrow">Primeiros passos</span>
+        <h2>Uma ideia para testar junto com a comunidade.</h2>
+
+        <p class="intro">
+          O piloto proposto começa com padarias e organizações
+          próximas, utilizando uma operação acompanhada pela equipe.
+        </p>
+
+        <p class="intro">
+          O objetivo é entender se a conexão facilita as retiradas
+          dentro do prazo e quais dificuldades precisam ser resolvidas.
+        </p>
+
+        <p class="small">
+          A aceitação dos alimentos, a conservação, o transporte
+          e o recebimento precisam ser alinhados entre os responsáveis.
+        </p>
+      </div>
+
+      <form id="demo-form">
+        <h3>Simule sua participação</h3>
+
+        <p class="small" id="form-help">
+          Demonstração: nenhuma informação será enviada ou armazenada.
+        </p>
+
+        <label>
+          Como você participaria?
+          <select name="perfil" required>
+            <option value="">Selecione</option>
+            <option value="estabelecimento">Estabelecimento doador</option>
+            <option value="organizacao">Organização receptora</option>
+          </select>
+        </label>
+
+        <label>
+          Cidade
+          <input
+            name="cidade"
+            placeholder="Ex.: Campinas"
+            maxlength="80"
+            required>
+        </label>
+
+        <label>
+          Alimento que poderia oferecer ou receber
+          <input
+            name="alimento"
+            placeholder="Ex.: pães"
+            maxlength="120"
+            required>
+        </label>
+
+        <button class="button" type="submit" aria-describedby="form-help">
+          Testar participação
+        </button>
+
+        <p id="feedback" role="status" aria-live="polite"></p>
+        <noscript>
+          Ative o JavaScript para executar esta demonstração.
+        </noscript>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <strong>ReConecta Alimentos</strong>
+      <span class="small">
+        Projeto acadêmico de Empreendedorismo · RMC
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.querySelector("#demo-form");
+    const feedback = document.querySelector("#feedback");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+      const cidade = String(data.get("cidade") || "").trim();
+      const alimento = String(data.get("alimento") || "").trim();
+
+      if (!cidade || !alimento) {
+        feedback.textContent = "Preencha os campos com informações válidas.";
+        return;
+      }
+
+      const papel = data.get("perfil") === "estabelecimento"
+        ? "oferecer"
+        : "receber";
+
+      feedback.textContent =
+        `Simulação concluída! Você participaria para ${papel} ` +
+        `${alimento} em ${cidade}. Nenhum dado foi enviado.`;
+    });
+  </script>
+</body>
+</html>
